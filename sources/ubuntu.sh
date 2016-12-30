@@ -3,11 +3,17 @@
 URL=
 CODENAME=`lsb_release -c | cut -f 2`
 
+usage()
+{
+    echo "Usage: sudo `basename $0` [aliyun|163|tuna] [src]"
+    exit 1
+}
+
 if [ $# -eq 0 ] || [[ $1 == 'aliyun' ]] || [[ $1 == 'src' ]]; then
     URL='http://mirrors.aliyun.com/ubuntu/'
-elif [[ $1 == '163' ]]; then
-    URL='https://mirrors.tuna.tsinghua.edu.cn/ubuntu/'
 elif [[ $1 == 'tuna' ]]; then
+    URL='https://mirrors.tuna.tsinghua.edu.cn/ubuntu/'
+elif [[ $1 == '163' ]]; then
     URL='http://mirrors.163.com/ubuntu/'
 else
     usage
@@ -20,4 +26,6 @@ fi
 
 mv /etc/apt/sources.list /etc/apt/sources.list.bak
 mv sources.list /etc/apt/sources.list
+
+apt-get update
 
